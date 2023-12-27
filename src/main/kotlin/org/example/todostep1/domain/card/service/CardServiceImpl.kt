@@ -40,6 +40,7 @@ class CardServiceImpl(
         val card = cardRepository.findByIdOrNull(cardId) ?: throw ModelNotFoundException("Card", cardId)
         card.title = request.title
         card.content = request.content
+        card.name = request.name
         return cardRepository.save(card).toResponse()
     }
 
