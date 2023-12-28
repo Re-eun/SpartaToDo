@@ -2,7 +2,6 @@ package org.example.todostep1.domain.card.model
 
 import jakarta.persistence.*
 import org.example.todostep1.domain.card.dto.CardResponse
-import org.example.todostep1.domain.card.dto.CardWithCommentResponse
 import org.example.todostep1.domain.comment.model.Comment
 import org.springframework.data.annotation.CreatedDate
 import java.time.LocalDateTime

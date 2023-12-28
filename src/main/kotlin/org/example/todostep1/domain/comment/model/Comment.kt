@@ -9,9 +9,7 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.example.todostep1.domain.card.model.Card
-import org.example.todostep1.domain.comment.dto.CheckRequest
 import org.example.todostep1.domain.comment.dto.CommentResponse
-import org.example.todostep1.domain.comment.repository.CommentRepository
 import org.springframework.data.annotation.CreatedDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

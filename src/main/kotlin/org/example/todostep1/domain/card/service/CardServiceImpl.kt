@@ -18,7 +18,6 @@ import org.example.todostep1.domain.comment.repository.CommentRepository
 import org.example.todostep1.domain.exception.ModelNotFoundException
 import org.example.todostep1.domain.exception.UnauthorizedAccess
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

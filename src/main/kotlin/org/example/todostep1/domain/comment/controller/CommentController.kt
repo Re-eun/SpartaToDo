@@ -1,6 +1,5 @@
 package org.example.todostep1.domain.comment.controller
 
-import org.example.todostep1.domain.card.controller.CardController
 import org.example.todostep1.domain.card.service.CardService
 import org.example.todostep1.domain.comment.dto.AddCommentRequest
 import org.example.todostep1.domain.comment.dto.CommentResponse
