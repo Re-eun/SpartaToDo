@@ -1,5 +1,6 @@
 package org.example.todostep1.domain.comment.dto
 
 data class DeleteCommentRequest(
-    val password: String
-)
+    override var name: String,
+    override var password: String,
+): CheckRequest

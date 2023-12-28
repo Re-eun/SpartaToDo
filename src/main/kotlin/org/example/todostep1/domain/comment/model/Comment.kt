@@ -9,6 +9,9 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.example.todostep1.domain.card.model.Card
+import org.example.todostep1.domain.comment.dto.CheckRequest
+import org.example.todostep1.domain.comment.dto.CommentResponse
+import org.example.todostep1.domain.comment.repository.CommentRepository
 import org.springframework.data.annotation.CreatedDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -39,4 +42,16 @@ class Comment(
     @Column(name = "created_date", updatable = false)
     var createdDate: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm")).toString()
 
+
+
+
+}
+
+fun Comment.toResponse(): CommentResponse {
+    return CommentResponse(
+        id = id!!,
+        name = name,
+        content = content,
+        createdDate = createdDate
+    )
 }

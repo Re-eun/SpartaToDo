@@ -2,12 +2,11 @@ package org.example.todostep1.domain.card.model
 
 import jakarta.persistence.*
 import org.example.todostep1.domain.card.dto.CardResponse
+import org.example.todostep1.domain.card.dto.CardWithCommentResponse
+import org.example.todostep1.domain.comment.model.Comment
 import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.jpa.domain.AbstractAuditable_.createdDate
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import javax.xml.stream.events.Comment
 
 @Entity
 @Table(name = "card")
@@ -45,6 +44,14 @@ class Card(
     fun isNotCompleted() {
         status = CardStatus.FALSE
     }
+
+    fun addComment(comment: Comment) {
+        comments.add(comment)
+    }
+
+    fun removeComment(comment: Comment) {
+        comments.remove(comment)
+    }
 }
 
 fun Card.toResponse(): CardResponse {
@@ -58,3 +65,4 @@ fun Card.toResponse(): CardResponse {
     )
 
 }
+

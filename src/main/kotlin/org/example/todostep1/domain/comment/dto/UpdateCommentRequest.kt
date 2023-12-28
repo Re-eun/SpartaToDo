@@ -1,7 +1,7 @@
 package org.example.todostep1.domain.comment.dto
 
 data class UpdateCommentRequest(
-    val name: String,
-    val password: String,
+    override var name: String,
+    override var password: String,
     val content: String
-)
+): CheckRequest

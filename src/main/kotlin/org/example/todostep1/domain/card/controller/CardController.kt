@@ -1,6 +1,7 @@
 package org.example.todostep1.domain.card.controller
 
 import org.example.todostep1.domain.card.dto.CardResponse
+import org.example.todostep1.domain.card.dto.CardWithCommentResponse
 import org.example.todostep1.domain.card.dto.CreateCardRequest
 import org.example.todostep1.domain.card.dto.UpdateCardRequest
 import org.example.todostep1.domain.card.service.CardService
@@ -27,7 +28,7 @@ class CardController(
     }
 
     @GetMapping("/{cardId}")
-    fun getcard(@PathVariable cardId: Long): ResponseEntity<CardResponse> {
+    fun getcard(@PathVariable cardId: Long): ResponseEntity<CardWithCommentResponse> {
         return ResponseEntity.status(HttpStatus.OK).body(cardService.getCard(cardId))
     }
 
