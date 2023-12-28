@@ -6,6 +6,7 @@ import org.example.todostep1.domain.card.dto.CreateCardRequest
 import org.example.todostep1.domain.card.dto.UpdateCardRequest
 import org.example.todostep1.domain.comment.dto.AddCommentRequest
 import org.example.todostep1.domain.comment.dto.CommentResponse
+import org.example.todostep1.domain.comment.dto.DeleteCommentRequest
 import org.example.todostep1.domain.comment.dto.UpdateCommentRequest
 
 interface CardService {
@@ -17,5 +18,5 @@ interface CardService {
 
     fun addComment(cardId: Long, request: AddCommentRequest): CommentResponse
     fun updateComment(cardId: Long, commentId: Long, request: UpdateCommentRequest): CommentResponse
-    fun deleteComment(cardId: Long, commentId: Long)
+    fun deleteComment(cardId: Long, commentId: Long, request: DeleteCommentRequest)
 }

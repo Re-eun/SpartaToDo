@@ -4,6 +4,7 @@ import org.example.todostep1.domain.card.controller.CardController
 import org.example.todostep1.domain.card.service.CardService
 import org.example.todostep1.domain.comment.dto.AddCommentRequest
 import org.example.todostep1.domain.comment.dto.CommentResponse
+import org.example.todostep1.domain.comment.dto.DeleteCommentRequest
 import org.example.todostep1.domain.comment.dto.UpdateCommentRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -42,8 +43,11 @@ class CommentController(
 
     @DeleteMapping("/{commentId}")
     fun deleteComment(@PathVariable cardId: Long,
-                      @PathVariable commentId: Long
-    ): ResponseEntity<CommentResponse> {
-        return  ResponseEntity.status(HttpStatus.NO_CONTENT).build()
+                      @PathVariable commentId: Long,
+                      @RequestBody deleteCommentRequest: DeleteCommentRequest
+    ): ResponseEntity<Unit> {
+        return  ResponseEntity
+            .status(HttpStatus.NO_CONTENT)
+            .body(cardService.deleteComment(cardId, commentId, deleteCommentRequest))
     }
 }
