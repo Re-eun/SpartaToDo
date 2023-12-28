@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.AbstractAuditable_.createdDate
 import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import javax.xml.stream.events.Comment
 
 @Entity
 @Table(name = "card")
@@ -23,7 +24,10 @@ class Card(
     var content: String? = null,
 
     @Column(name = "name")
-    var name: String
+    var name: String,
+
+    @OneToMany(mappedBy = "card", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    val comments: MutableList<Comment> = mutableListOf()
 
 ) {
     @Id
