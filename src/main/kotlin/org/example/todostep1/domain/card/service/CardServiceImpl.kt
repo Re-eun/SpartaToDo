@@ -4,6 +4,7 @@ import org.example.todostep1.domain.card.dto.CardResponse
 import org.example.todostep1.domain.card.dto.CreateCardRequest
 import org.example.todostep1.domain.card.dto.UpdateCardRequest
 import org.example.todostep1.domain.card.model.Card
+import org.example.todostep1.domain.card.model.CardStatus
 import org.example.todostep1.domain.card.model.toResponse
 import org.example.todostep1.domain.card.repository.CardRepository
 import org.example.todostep1.domain.exception.ModelNotFoundException
@@ -38,11 +39,17 @@ class CardServiceImpl(
     @Transactional
     override fun updateCard(cardId: Long, request: UpdateCardRequest): CardResponse {
         val card = cardRepository.findByIdOrNull(cardId) ?: throw ModelNotFoundException("Card", cardId)
+        when(request.status) {
+            CardStatus.TRUE.name -> card.isCompleted()
+            CardStatus.FALSE.name -> card.isNotCompleted()
+        }
         card.title = request.title
         card.content = request.content
         card.name = request.name
         return cardRepository.save(card).toResponse()
-    }
+        }
+
+
 
     @Transactional
     override fun deleteCard(cardId: Long) {
