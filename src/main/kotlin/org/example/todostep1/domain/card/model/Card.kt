@@ -3,7 +3,6 @@ package org.example.todostep1.domain.card.model
 import jakarta.persistence.*
 import org.example.todostep1.domain.card.dto.CardResponse
 import org.springframework.data.annotation.CreatedDate
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
