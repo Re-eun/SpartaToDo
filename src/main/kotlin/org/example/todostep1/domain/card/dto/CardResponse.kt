@@ -1,6 +1,5 @@
 package org.example.todostep1.domain.card.dto
 
-import java.time.LocalDateTime
 
 
 data class CardResponse(

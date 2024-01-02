@@ -45,11 +45,13 @@ class CardController(
     }
 
     @DeleteMapping("/{cardId}")
-    fun deleteCard(@PathVariable cardId: Long): ResponseEntity<Unit> {
+    fun deleteCard(@PathVariable cardId: Long): ResponseEntity<String> {
         cardService.deleteCard(cardId)
+        val deleteTodoSuccessMessage = "할일이 성공적으로 삭제되었습니다."
+
         return ResponseEntity
-            .status(HttpStatus.NO_CONTENT)
-            .build()
+            .status(HttpStatus.OK)
+            .body(deleteTodoSuccessMessage)
     }
 
 }
