@@ -44,9 +44,11 @@ class CommentController(
     fun deleteComment(@PathVariable cardId: Long,
                       @PathVariable commentId: Long,
                       @RequestBody deleteCommentRequest: DeleteCommentRequest
-    ): ResponseEntity<Unit> {
+    ): ResponseEntity<String> {
+        cardService.deleteComment(cardId, commentId, deleteCommentRequest)
+        val deleteSuccessMessage = "댓글이 성공적으로 삭제되었습니다."
         return  ResponseEntity
-            .status(HttpStatus.NO_CONTENT)
-            .body(cardService.deleteComment(cardId, commentId, deleteCommentRequest))
+            .status(HttpStatus.OK)
+            .body(deleteSuccessMessage)
     }
 }

@@ -28,7 +28,7 @@ class CardServiceImpl(
 ): CardService {
 
     override fun getAllCards(): List<CardResponse> {
-        return cardRepository.findAll().map { it.toResponse() }.sortedByDescending{it.createdDate}
+        return cardRepository.findAll().map { it.toResponse() }.sortedByDescending{it.createdAt}
     }
 
     // 단건 카드 조회 시 댓글도 같이 조회되도록
@@ -59,7 +59,7 @@ class CardServiceImpl(
         card.title = request.title
         card.content = request.content
         card.name = request.name
-        return cardRepository.save(card).toResponse()
+        return card.toResponse() // update 시 영속성 컨텍스트에 대해 dirty checking 일어나므로 save 할 필요 X
         }
 
 
@@ -99,7 +99,6 @@ class CardServiceImpl(
         if(request.name != comment.name || request.password != comment.password) throw UnauthorizedAccess()
 
         comment.content = request.content
-        commentRepository.save(comment)
         return comment.toResponse()
 
     }

@@ -8,9 +8,11 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import org.example.todostep1.domain.basetime.BaseTime
 import org.example.todostep1.domain.card.model.Card
 import org.example.todostep1.domain.comment.dto.CommentResponse
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.jpa.domain.AbstractAuditable_.createdDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -31,16 +33,10 @@ class Comment(
     @JoinColumn(name = "card_id")
     val card: Card
 
-) {
+): BaseTime() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
-
-    @CreatedDate // Entity 의 생성일자를 나타내는데 사용 저장될 때 현재 날짜(시간)으로 자동으로 설정되게 된다.
-    @Column(name = "created_date", updatable = false)
-    var createdDate: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm")).toString()
-
-
 
 
 }
@@ -50,6 +46,6 @@ fun Comment.toResponse(): CommentResponse {
         id = id!!,
         name = name,
         content = content,
-        createdDate = createdDate
+        createdAt = createdAt
     )
 }
