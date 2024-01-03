@@ -10,7 +10,9 @@ import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.example.todostep1.domain.basetime.BaseTime
 import org.example.todostep1.domain.card.model.Card
+import org.example.todostep1.domain.comment.dto.CheckRequest
 import org.example.todostep1.domain.comment.dto.CommentResponse
+import org.example.todostep1.domain.comment.repository.CommentRepository
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.AbstractAuditable_.createdDate
 import java.time.LocalDateTime
@@ -38,6 +40,9 @@ class Comment(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
+    fun isNameAndPasswordInCorrect(request: CheckRequest): Boolean {
+        return request.name != this.name || request.password != this.password
+    }
 
 }
 

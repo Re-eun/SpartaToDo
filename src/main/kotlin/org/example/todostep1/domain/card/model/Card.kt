@@ -3,6 +3,8 @@ package org.example.todostep1.domain.card.model
 import jakarta.persistence.*
 import org.example.todostep1.domain.basetime.BaseTime
 import org.example.todostep1.domain.card.dto.CardResponse
+import org.example.todostep1.domain.card.dto.UpdateCardRequest
+import org.example.todostep1.domain.card.repository.CardRepository
 import org.example.todostep1.domain.comment.model.Comment
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.AbstractAuditable_.createdDate
@@ -35,13 +37,13 @@ class Card(
     var id: Long? = null
 
 
-    fun isCompleted() {
-        status = CardStatus.TRUE
+    fun isCompletedOrNot(request: UpdateCardRequest) {
+        when(request.status) {
+            CardStatus.TRUE.name ->  status = CardStatus.TRUE
+            CardStatus.FALSE.name -> status = CardStatus.FALSE
+        }
     }
 
-    fun isNotCompleted() {
-        status = CardStatus.FALSE
-    }
 
     fun addComment(comment: Comment) {
         comments.add(comment)

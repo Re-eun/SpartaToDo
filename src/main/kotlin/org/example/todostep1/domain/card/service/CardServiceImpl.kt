@@ -5,7 +5,6 @@ import org.example.todostep1.domain.card.dto.CardWithCommentResponse
 import org.example.todostep1.domain.card.dto.CreateCardRequest
 import org.example.todostep1.domain.card.dto.UpdateCardRequest
 import org.example.todostep1.domain.card.model.Card
-import org.example.todostep1.domain.card.model.CardStatus
 import org.example.todostep1.domain.card.model.toResponse
 import org.example.todostep1.domain.card.repository.CardRepository
 import org.example.todostep1.domain.comment.dto.AddCommentRequest
@@ -34,7 +33,7 @@ class CardServiceImpl(
     // 단건 카드 조회 시 댓글도 같이 조회되도록
     override fun getCard(cardId: Long): CardWithCommentResponse {
         val card = cardRepository.findByIdOrNull(cardId) ?: throw ModelNotFoundException("Card", cardId)
-        val comments = commentRepository.findByCardId(cardId).toList().map { it.toResponse() }
+        val comments = commentRepository.findByCardId(cardId).map { it.toResponse() }
         return CardWithCommentResponse(card.toResponse(), comments)
     }
 
@@ -52,10 +51,7 @@ class CardServiceImpl(
     @Transactional
     override fun updateCard(cardId: Long, request: UpdateCardRequest): CardResponse {
         val card = cardRepository.findByIdOrNull(cardId) ?: throw ModelNotFoundException("Card", cardId)
-        when(request.status) {
-            CardStatus.TRUE.name -> card.isCompleted()
-            CardStatus.FALSE.name -> card.isNotCompleted()
-        }
+        card.isCompletedOrNot(request)
         card.title = request.title
         card.content = request.content
         card.name = request.name
@@ -91,12 +87,11 @@ class CardServiceImpl(
 
     @Transactional
     override fun updateComment(cardId: Long, commentId: Long, request: UpdateCommentRequest): CommentResponse {
-        //DB에서 해당하는 id 의 카드 가져와서 request로 업데이트 후 저장, commentResponse로 변환 후 반환
         val card = cardRepository.findByIdOrNull(cardId) ?: throw ModelNotFoundException("Card", cardId)
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment", commentId)
 
         // 비밀번호 검사
-        if(request.name != comment.name || request.password != comment.password) throw UnauthorizedAccess()
+        if(comment.isNameAndPasswordInCorrect(request)) throw UnauthorizedAccess()
 
         comment.content = request.content
         return comment.toResponse()
@@ -105,18 +100,15 @@ class CardServiceImpl(
 
     @Transactional
     override fun deleteComment(cardId: Long, commentId: Long, request: DeleteCommentRequest) {
-        //DB 에서 id 에 해당하는 카드의 댓글을 가져와서 삭제
         val card = cardRepository.findByIdOrNull(cardId) ?: throw ModelNotFoundException("Card", cardId)
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment", cardId)
 
         // 비밀번호 검사
-        if(request.name != comment.name || request.password != comment.password) throw UnauthorizedAccess()
-
+        if(comment.isNameAndPasswordInCorrect(request)) throw UnauthorizedAccess()
 
         // 삭제 후 저장, 영속성 전파
         card.removeComment(comment)
         cardRepository.save(card)
-
 
     }
 }
