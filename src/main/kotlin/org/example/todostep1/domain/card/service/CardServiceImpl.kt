@@ -1,9 +1,7 @@
 package org.example.todostep1.domain.card.service
 
-import org.example.todostep1.domain.card.dto.CardResponse
-import org.example.todostep1.domain.card.dto.CardWithCommentResponse
-import org.example.todostep1.domain.card.dto.CreateCardRequest
-import org.example.todostep1.domain.card.dto.UpdateCardRequest
+import org.example.todostep1.domain.card.dto.*
+import org.example.todostep1.domain.card.model.AscOrDesc
 import org.example.todostep1.domain.card.model.Card
 import org.example.todostep1.domain.card.model.toResponse
 import org.example.todostep1.domain.card.repository.CardRepository
@@ -16,6 +14,7 @@ import org.example.todostep1.domain.comment.model.toResponse
 import org.example.todostep1.domain.comment.repository.CommentRepository
 import org.example.todostep1.domain.exception.ModelNotFoundException
 import org.example.todostep1.domain.exception.UnauthorizedAccess
+import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -26,11 +25,19 @@ class CardServiceImpl(
     private val commentRepository: CommentRepository
 ): CardService {
 
-    override fun getAllCards(): List<CardResponse> {
-        return cardRepository.findAll().map { it.toResponse() }.sortedByDescending{it.createdAt}
+    // 작성자 이름을 받아 일치하는 할 일 목록을 반환, 입력받은 정렬기준에 따라 정렬한다.
+    // 작성자 이름이 없으면 모든 목록, 정렬기준이 없으면 오름차순 반환
+    override fun getAllCards(name:String, order:String): List<CardResponse> {
+        var response: List<CardResponse> = listOf()
+        if (order == AscOrDesc.DESC.name) {
+            response = cardRepository.findAllByNameOrderByCreatedAtDesc(name).map { it.toResponse() }
+        } else {
+            response = cardRepository.findAllByNameOrderByCreatedAt(name)
+        }
+
+        return response
     }
 
-    // 단건 카드 조회 시 댓글도 같이 조회되도록
     override fun getCard(cardId: Long): CardWithCommentResponse {
         val card = cardRepository.findByIdOrNull(cardId) ?: throw ModelNotFoundException("Card", cardId)
         val comments = commentRepository.findByCardId(cardId).map { it.toResponse() }

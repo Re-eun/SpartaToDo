@@ -1,16 +1,13 @@
 package org.example.todostep1.domain.card.service
 
-import org.example.todostep1.domain.card.dto.CardResponse
-import org.example.todostep1.domain.card.dto.CardWithCommentResponse
-import org.example.todostep1.domain.card.dto.CreateCardRequest
-import org.example.todostep1.domain.card.dto.UpdateCardRequest
+import org.example.todostep1.domain.card.dto.*
 import org.example.todostep1.domain.comment.dto.AddCommentRequest
 import org.example.todostep1.domain.comment.dto.CommentResponse
 import org.example.todostep1.domain.comment.dto.DeleteCommentRequest
 import org.example.todostep1.domain.comment.dto.UpdateCommentRequest
 
 interface CardService {
-    fun getAllCards(): List<CardResponse>
+    fun getAllCards(name:String, order:String): List<CardResponse>
     fun getCard(cardId: Long): CardWithCommentResponse
     fun createCard(request: CreateCardRequest): CardResponse
     fun updateCard(cardId: Long, request: UpdateCardRequest): CardResponse

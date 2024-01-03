@@ -44,7 +44,6 @@ class Card(
         }
     }
 
-
     fun addComment(comment: Comment) {
         comments.add(comment)
     }

@@ -3,14 +3,17 @@ package org.example.todostep1.domain.exception
 import org.example.todostep1.domain.exception.dto.ErrorResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+
+
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
 
     @ExceptionHandler(ModelNotFoundException::class)
-    fun handleModelNotFoundException(e : ModelNotFoundException): ResponseEntity<ErrorResponse> {
+    fun handleModelNotFoundException(e: ModelNotFoundException): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse(e.message))
     }
 
@@ -18,4 +21,10 @@ class GlobalExceptionHandler {
     fun handleUnauthorizedAccess(e: UnauthorizedAccess): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse(e.message))
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse(e.message))
+    }
+
 }
