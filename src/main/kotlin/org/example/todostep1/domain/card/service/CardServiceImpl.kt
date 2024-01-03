@@ -30,7 +30,7 @@ class CardServiceImpl(
     override fun getAllCards(name:String, order:String): List<CardResponse> {
         var response: List<CardResponse> = listOf()
         if (order == AscOrDesc.DESC.name) {
-            response = cardRepository.findAllByNameOrderByCreatedAtDesc(name).map { it.toResponse() }
+            response = cardRepository.findAllByNameOrderByCreatedAtDesc(name)
         } else {
             response = cardRepository.findAllByNameOrderByCreatedAt(name)
         }
