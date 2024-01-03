@@ -56,7 +56,7 @@ class Card(
 fun Card.toResponse(): CardResponse {
     return CardResponse(
         id = id!!,
-        status = status.name,
+        status = status,
         title = title,
         content = content,
         createdAt = createdAt,

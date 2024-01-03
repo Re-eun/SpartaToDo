@@ -26,7 +26,6 @@ class CardServiceImpl(
 ): CardService {
 
     // 작성자 이름을 받아 일치하는 할 일 목록을 반환, 입력받은 정렬기준에 따라 정렬한다.
-    // 작성자 이름이 없으면 모든 목록, 정렬기준이 없으면 오름차순 반환
     override fun getAllCards(name:String, order:String): List<CardResponse> {
         var response: List<CardResponse> = listOf()
         if (order == AscOrDesc.DESC.name) {
@@ -40,8 +39,7 @@ class CardServiceImpl(
 
     override fun getCard(cardId: Long): CardWithCommentResponse {
         val card = cardRepository.findByIdOrNull(cardId) ?: throw ModelNotFoundException("Card", cardId)
-        val comments = commentRepository.findByCardId(cardId).map { it.toResponse() }
-        return CardWithCommentResponse(card.toResponse(), comments)
+        return CardWithCommentResponse(card.toResponse(), card.comments.map { it.toResponse() })
     }
 
     @Transactional
