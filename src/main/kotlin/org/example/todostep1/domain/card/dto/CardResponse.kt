@@ -1,6 +1,8 @@
 package org.example.todostep1.domain.card.dto
 
+
 import org.example.todostep1.domain.card.model.CardStatus
+
 
 
 data class CardResponse(
