@@ -46,9 +46,9 @@ class CommentController(
                       @RequestBody deleteCommentRequest: DeleteCommentRequest
     ): ResponseEntity<String> {
         cardService.deleteComment(cardId, commentId, deleteCommentRequest)
-        val deleteSuccessMessage = "댓글이 성공적으로 삭제되었습니다."
+        val deleteCommentSuccessMessage = "댓글이 성공적으로 삭제되었습니다."
         return  ResponseEntity
             .status(HttpStatus.OK)
-            .body(deleteSuccessMessage)
+            .body(deleteCommentSuccessMessage)
     }
 }
