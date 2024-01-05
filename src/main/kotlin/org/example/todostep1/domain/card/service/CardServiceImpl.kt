@@ -26,9 +26,9 @@ class CardServiceImpl(
 ): CardService {
 
     // 작성자 이름을 받아 일치하는 할 일 목록을 반환, 입력받은 정렬기준에 따라 정렬한다.
-    override fun getAllCards(name:String, order:String): List<CardResponse> {
+    override fun getAllCards(name:String, order:AscOrDesc): List<CardResponse> {
         var response: List<CardResponse> = listOf()
-        if (order == AscOrDesc.DESC.name) {
+        if (order == AscOrDesc.DESC) {
             response = cardRepository.findAllByNameOrderByCreatedAtDesc(name)
         } else {
             response = cardRepository.findAllByNameOrderByCreatedAt(name)
