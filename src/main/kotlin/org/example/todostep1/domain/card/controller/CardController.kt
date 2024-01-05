@@ -1,6 +1,7 @@
 package org.example.todostep1.domain.card.controller
 
 import org.example.todostep1.domain.card.dto.*
+import org.example.todostep1.domain.card.model.AscOrDesc
 import org.example.todostep1.domain.card.service.CardService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -22,7 +23,7 @@ class CardController(
 ) {
 
     @GetMapping
-    fun getAllCards(@RequestParam name:String, @RequestParam order:String): ResponseEntity<List<CardResponse>> {
+    fun getAllCards(@RequestParam name:String, @RequestParam order:AscOrDesc): ResponseEntity<List<CardResponse>> {
         return ResponseEntity.status(HttpStatus.OK).body(cardService.getAllCards(name, order))
     }
 
